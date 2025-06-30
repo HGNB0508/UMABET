@@ -1,0 +1,12 @@
+[
+  {
+    "round": 1,
+    "bettingOpen": false,
+    "winner": "A"
+  },
+  {
+    "round": 2,
+    "bettingOpen": true,
+    "winner": null
+  }
+]

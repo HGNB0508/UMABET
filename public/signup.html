@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>회원가입 - UMABET</title>
+</head>
+<body>
+  <h1>회원가입</h1>
+  <input type="text" id="username" placeholder="아이디" />
+  <input type="password" id="password" placeholder="비밀번호" />
+  <button onclick="signup()">회원가입</button>
+
+  <script>
+    function signup() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      fetch("/api/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      })
+        .then(res => res.json())
+        .then(data => {
+          alert(data.message);
+          if (res.ok) location.href = "/index.html";
+        });
+    }
+  </script>
+</body>
+</html>

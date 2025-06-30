@@ -1,0 +1,22 @@
+/* public/style.css */
+body {
+  font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+input, select, button {
+  margin: 5px 0;
+  padding: 8px;
+  width: 100%;
+}
+button {
+  background: #333;
+  color: white;
+  cursor: pointer;
+}
+button:hover {
+  background: #555;
+}

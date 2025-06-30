@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>UMABET - 운영자</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>UMABET 운영자 페이지</h1>
+
+  <!-- 라운드 설정 -->
+  <h2>라운드 설정</h2>
+  <input type="number" id="round-number" placeholder="라운드 번호" />
+  <button onclick="startRound()">라운드 시작</button>
+
+  <!-- 베팅 상태 설정 -->
+  <h2>베팅 상태</h2>
+  <button onclick="setBetting(true)">베팅 시작</button>
+  <button onclick="setBetting(false)">베팅 종료</button>
+
+  <!-- 승리 팀 설정 -->
+  <h2>승리 팀 지정 및 포인트 지급</h2>
+  <select id="winner-select">
+    <option value="A">팀 A</option>
+    <option value="B">팀 B</option>
+  </select>
+  <button onclick="setWinner()">승리 팀 설정 및 지급</button>
+
+  <!-- 실시간 베팅 통계 -->
+  <h2>현재 라운드 통계</h2>
+  <div id="stats">
+    <p><strong>팀 A</strong> - 인원: <span id="a-users">0</span>명 |
+      포인트: <span id="a-points">0</span> |
+      배당률: <span id="a-odds">-</span>
+    </p>
+    <p><strong>팀 B</strong> - 인원: <span id="b-users">0</span>명 |
+      포인트: <span id="b-points">0</span> |
+      배당률: <span id="b-odds">-</span>
+    </p>
+  </div>
+
+  <script>
+    function startRound() {
+      const round = parseInt(document.getElementById("round-number").value);
+      if (isNaN(round)) return alert("라운드 번호를 입력하세요.");
+      fetch("/api/admin/round", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ round }),
+      })
+        .then(res => res.json())
+        .then(data => {
+          alert(data.message);
+          loadStats();
+        });
+    }
+
+    function setBetting(open) {
+      fetch("/api/admin/betting", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ open }),
+      })
+        .then(res => res.json())
+        .then(data => alert(data.message));
+    }
+
+    function setWinner() {
+      const winner = document.getElementById("winner-select").value;
+      fetch("/api/admin/winner", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ winner }),
+      })
+        .then(res => res.json())
+        .then(data => {
+          alert(data.message);
+          loadStats();
+        });
+    }
+
+    function loadStats() {
+      fetch("/api/admin/stats")
+        .then(res => res.json())
+        .then(stats => {
+          document.getElementById("a-users").innerText = stats.A.users;
+          document.getElementById("a-points").innerText = stats.A.points;
+          document.getElementById("a-odds").innerText = stats.A.odds;
+
+          document.getElementById("b-users").innerText = stats.B.users;
+          document.getElementById("b-points").innerText = stats.B.points;
+          document.getElementById("b-odds").innerText = stats.B.odds;
+        });
+    }
+
+
+    setInterval(loadStats, 3000);
+    window.onload = loadStats;
+  </script>
+</body>
+</html>

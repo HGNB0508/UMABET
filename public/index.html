@@ -1,0 +1,44 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>UMABET - 사용자</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>UMABET 베팅 시스템</h1>
+
+  <!-- 로그인 영역 -->
+  <div id="auth">
+    <h2>로그인</h2>
+    <input type="text" id="username" placeholder="아이디" />
+    <input type="password" id="password" placeholder="비밀번호" />
+    <button onclick="login()">로그인</button>
+    <a href="signup.html"><button>회원가입 페이지로 이동</button></a>
+  </div>
+
+  <!-- 메인 영역 -->
+  <div id="main" style="display:none;">
+    <p><strong>유저:</strong> <span id="user-name"></span></p>
+    <p><strong>보유 포인트:</strong> <span id="user-points"></span></p>
+    <p><strong>현재 라운드:</strong> <span id="current-round"></span></p>
+    <p><strong>베팅 가능:</strong> <span id="betting-status"></span></p>
+    <p><strong>총 베팅 금액:</strong> <span id="total-bets">0</span></p>
+
+
+    <h3>팀 선택 및 베팅</h3>
+    <select id="team-select">
+      <option value="A">팀 A</option>
+      <option value="B">팀 B</option>
+    </select>
+    <input type="number" id="bet-amount" placeholder="베팅할 포인트" />
+    <button onclick="placeBet()">베팅하기</button>
+
+    <br><br>
+    <button onclick="logout()">로그아웃</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
